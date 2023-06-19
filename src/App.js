@@ -19,20 +19,32 @@ export default function App() {
     // PRÁTICA 2:
     const getItensLocalStorage = () => {
         // peguei do local
-        const listaString = localStorage.getItem('lista');
+        // const listaString = localStorage.getItem('lista');
         // console.log('pegou:',typeof listaString);
 
         // transformei em array
-        const listaArray = JSON.parse(listaString);
-        console.log('ListaArray', listaArray);
+        // const listaArray = JSON.parse(listaString);
+        // console.log('ListaArray', listaArray);
 
         // quando n tem nada no local storage da erro:
         // setListaCompras(listaArray)
 
-        // para não dar erro:
-        if (listaArray) {
-            setListaCompras(listaArray);
-        }
+        // if (getLista) {
+        //     setListaCompras(getLista);
+        // }
+
+        // -----------------------------------------------
+
+        // RESUMINDO TUDO DE CIMA EM UMA LINHA:
+        const getLista = JSON.parse(localStorage.getItem('lista'));
+
+        // OPÇÃO DE CONDICIONAL 1
+        // if (getLista) {
+        //     setListaCompras(getLista);
+        // }
+
+        // OPÇÃO DE CONDICIONAL 2
+        getLista && setListaCompras(getLista);
     };
 
     // PRÁTICA 1:
