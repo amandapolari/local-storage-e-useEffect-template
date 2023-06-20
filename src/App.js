@@ -18,24 +18,6 @@ export default function App() {
 
     // PRÁTICA 2:
     const getItensLocalStorage = () => {
-        // peguei do local
-        // const listaString = localStorage.getItem('lista');
-        // console.log('pegou:',typeof listaString);
-
-        // transformei em array
-        // const listaArray = JSON.parse(listaString);
-        // console.log('ListaArray', listaArray);
-
-        // quando n tem nada no local storage da erro:
-        // setListaCompras(listaArray)
-
-        // if (getLista) {
-        //     setListaCompras(getLista);
-        // }
-
-        // -----------------------------------------------
-
-        // RESUMINDO TUDO DE CIMA EM UMA LINHA:
         const getLista = JSON.parse(localStorage.getItem('lista'));
 
         // OPÇÃO DE CONDICIONAL 1
@@ -54,20 +36,23 @@ export default function App() {
         localStorage.setItem('lista', listaString);
     };
 
+    // FIXAÇÃO
+    const removeLista = () => {
+        localStorage.removeItem('lista');
+        // [DÚVIDA] Devo setar a listaCompras com um array vazio ou uma string vazia? Vai fazer diferença?
+        setListaCompras([]);
+    };
+
     // ACONTECE 1X - QUANDO A PÁGINA É MONTADA
     useEffect(() => {
-        // toda vez que a página for montada eu quero que a função seja executada:
-        // se a lista compras for vazia, ele n executa, só executa se a lista compras tiver alguma coisa
         getItensLocalStorage();
     }, []);
 
-    // ACONTECE TODA VEZ - A LISTA COMPRAS É ATUALIZADA
+    // ACONTECE QUANDO A LISTA COMPRAS É ATUALIZADA
     useEffect(() => {
-        // listaCompras.length && saveLocalStorage();
         if (listaCompras.length) {
             saveLocalStorage();
         }
-        // toda vez que o listaCompras for atualiza, alguma coisa vai acontecer:
     }, [listaCompras]);
 
     return (
@@ -80,10 +65,7 @@ export default function App() {
                 placeholder="Digite um item"
             />
             <button onClick={adicionarItem}>Adicionar</button>
-            {/* <button onClick={saveLocalStorage}>Salvar no Local Storage</button> */}
-            {/* <button onClick={getItensLocalStorage}>
-                Pegar do Local Storage
-            </button> */}
+            <button onClick={removeLista}>Remove Lista</button>
 
             <ul>
                 {listaCompras.map((compra, index) => (
