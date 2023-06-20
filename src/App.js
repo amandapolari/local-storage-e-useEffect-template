@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function App() {
     // Estado para armazenar a lista de compras
@@ -54,6 +54,22 @@ export default function App() {
         localStorage.setItem('lista', listaString);
     };
 
+    // ACONTECE 1X - QUANDO A PÁGINA É MONTADA
+    useEffect(() => {
+        // toda vez que a página for montada eu quero que a função seja executada:
+        // se a lista compras for vazia, ele n executa, só executa se a lista compras tiver alguma coisa
+        getItensLocalStorage();
+    }, []);
+
+    // ACONTECE TODA VEZ - A LISTA COMPRAS É ATUALIZADA
+    useEffect(() => {
+        // listaCompras.length && saveLocalStorage();
+        if (listaCompras.length) {
+            saveLocalStorage();
+        }
+        // toda vez que o listaCompras for atualiza, alguma coisa vai acontecer:
+    }, [listaCompras]);
+
     return (
         <div>
             <h1>Lista de Compras</h1>
@@ -64,10 +80,10 @@ export default function App() {
                 placeholder="Digite um item"
             />
             <button onClick={adicionarItem}>Adicionar</button>
-            <button onClick={saveLocalStorage}>Salvar no Local Storage</button>
-            <button onClick={getItensLocalStorage}>
+            {/* <button onClick={saveLocalStorage}>Salvar no Local Storage</button> */}
+            {/* <button onClick={getItensLocalStorage}>
                 Pegar do Local Storage
-            </button>
+            </button> */}
 
             <ul>
                 {listaCompras.map((compra, index) => (
